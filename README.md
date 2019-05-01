@@ -9,13 +9,15 @@ without the overhead and nuisance of running a nanny process.
 
 * Pressing Ctrl-C does a clean shutdown.
 * `docker stop` does a clean shutdown.
+* When called with another PID than 1, switch to sub-command.
 
 Under the hood, `runit-docker` translates `SIGTERM` and `SIGINT` to `SIGHUP`.
 
 ## Usage
 
 * Build with `make`, install with `make install`.
-* Add `CMD ["/sbin/runit-docker"]` to your `Dockerfile`.
+* Add `ENTRYPOINT ["/sbin/runit-docker"]` to your `Dockerfile` for system start.
+* Add `CMD ["/bin/bash"]` or other to your `Dockerfile` for normal running.
 * Run `debian/rules clean build binary` to build a Debian package.
 
 ## Author

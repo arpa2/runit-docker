@@ -1,4 +1,13 @@
 #!/bin/sh
 
-export LD_PRELOAD=/lib/runit-docker.so
-exec runsvdir /etc/service
+# Respond to PID 1          by running services
+# Respond to no cmdline arg by running services
+# Respond to anything else  by running a subcommand
+
+if [ $$ -eq 1 -o $# -eq 0 ]
+then
+	export LD_PRELOAD=/lib/runit-docker.so
+	exec runsvdir /etc/service
+else
+	"$@"
+fi
